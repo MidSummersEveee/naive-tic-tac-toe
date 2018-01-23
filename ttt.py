@@ -43,6 +43,41 @@ def check_row_H():
 				Board[x] = [4, 4, 4]
 				WinSide = "White"
 
+# 1.2 check vertical
+def check_row_V():
+	global MoveSide, WinSide
+	if MoveSide == 'Black Turn':
+		for y in range(board_width):
+			if Board[0][y] + Board[1][y]+ Board[2][y] == 2:
+				print(f'Decisive Move Deteced, Vertical Row {y} to be Completed by {MoveSide[0:5]}:')
+				for temp in range(3):
+					place_stone(temp, y, 1)
+				WinSide = "Black"
+	else:
+		for y in range(board_width):
+			if Board[0][y] + Board[1][y]+ Board[2][y] == 8:
+				print(f'Decisive Move Deteced, Vertical Row {y} to be Completed by {MoveSide[0:5]}:')
+				for temp in range(3):
+					place_stone(temp, y, 4)
+				WinSide = "White"
+
+# 1.3 check diagonal
+def check_row_D():
+	global MoveSide, WinSide
+	if MoveSide == 'Black Turn':
+		if Board[0][0] + Board[1][1]+ Board[2][2] == 2:
+			print(f'Decisive Move Deteced, Diagonal Row \ to be Completed by {MoveSide[0:5]}:')
+			for temp in range(3):
+				place_stone(temp, y, 1)
+			WinSide = "Black"
+	else:
+		if Board[0][2] + Board[1][1]+ Board[2][0] == 8:
+			print(f'Decisive Move Deteced, Diagonal Row / to be Completed by {MoveSide[0:5]}:')
+			for temp in range(3):
+				place_stone(temp, y, 4)
+			WinSide = "White"
+
+
 
 
 # Check if the board is full
@@ -99,13 +134,16 @@ WinSide = ''
 
 while(WinSide == ''):
 	check_row_H()
+
+	if WinSide == '':
+		check_row_V()
 	
 	if WinSide == '':
 		RandomMove()
 	
 	if WinSide != '':
 		print_board()
-		print(f'Game Over! {WinSide} Win !')
+		print(f'Game Over! {WinSide} Win!')
 		break
 	
 	if not check_board_has_empty():
