@@ -48,14 +48,14 @@ def check_row_V():
 	global MoveSide, WinSide
 	if MoveSide == 'Black Turn':
 		for y in range(board_width):
-			if Board[0][y] + Board[1][y]+ Board[2][y] == 2:
+			if Board[0][y] + Board[1][y] + Board[2][y] == 2:
 				print(f'Decisive Move Deteced, Vertical Row {y} to be Completed by {MoveSide[0:5]}:')
 				for temp in range(3):
 					place_stone(temp, y, 1)
 				WinSide = "Black"
 	else:
 		for y in range(board_width):
-			if Board[0][y] + Board[1][y]+ Board[2][y] == 8:
+			if Board[0][y] + Board[1][y] + Board[2][y] == 8:
 				print(f'Decisive Move Deteced, Vertical Row {y} to be Completed by {MoveSide[0:5]}:')
 				for temp in range(3):
 					place_stone(temp, y, 4)
@@ -65,16 +65,16 @@ def check_row_V():
 def check_row_D():
 	global MoveSide, WinSide
 	if MoveSide == 'Black Turn':
-		if Board[0][0] + Board[1][1]+ Board[2][2] == 2:
+		if Board[0][0] + Board[1][1] + Board[2][2] == 2:
 			print(f'Decisive Move Deteced, Diagonal Row \ to be Completed by {MoveSide[0:5]}:')
 			for temp in range(3):
-				place_stone(temp, y, 1)
+				place_stone(temp, temp, 1)
 			WinSide = "Black"
 	else:
-		if Board[0][2] + Board[1][1]+ Board[2][0] == 8:
+		if Board[0][2] + Board[1][1] + Board[2][0] == 8:
 			print(f'Decisive Move Deteced, Diagonal Row / to be Completed by {MoveSide[0:5]}:')
 			for temp in range(3):
-				place_stone(temp, y, 4)
+				place_stone(temp, 2-temp, 4)
 			WinSide = "White"
 
 
