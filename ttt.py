@@ -137,6 +137,9 @@ while(WinSide == ''):
 
 	if WinSide == '':
 		check_row_V()
+
+	if WinSide == '':
+		check_row_D()
 	
 	if WinSide == '':
 		RandomMove()
