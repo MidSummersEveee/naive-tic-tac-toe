@@ -50,7 +50,6 @@ def check_row_H():
 			Board[x] = [2*get_value_by_side(), 2*get_value_by_side(), 2*get_value_by_side()]
 			WinSide = MoveSide
 
-
 # 1.2 check vertical
 def check_row_V():
 	global MoveSide, WinSide
@@ -77,9 +76,8 @@ def check_row_D():
 		print(f'Decisive Move Deteced, Diagonal Row / to be Completed by {MoveSide}:')
 		for temp in range(3):
 			if Board[temp][2-temp] == 0:
-				place_stone(temp, temp, value)
+				place_stone(temp, 2-temp, value)
 		WinSide = MoveSide
-
 
 # Level 2: Counter Rows
 # 2.1 check horizontal
