@@ -141,12 +141,39 @@ def counter_flock():
 			if Board[x][y] < 1:
 				move_space.append("".join([str(x), str(y)]))
 	for choice in move_space:
-		if check_all_rows_by_point(int(choice[0]), int(choice[1]), counter="Yes"):
+		print(f'inspecting {choice[0]}{choice[1]}')
+		# if check_all_rows_by_point(int(choice[0]), int(choice[1]), counter="Yes") and foresee_if_safe_to_counter(int(choice[0]), int(choice[1])):
+		if foresee_if_safe_to_counter(int(choice[0]), int(choice[1])) and check_all_rows_by_point(int(choice[0]), int(choice[1]), counter="Yes"):
 			print('Counter Flock!!!!!')
 			place_stone(int(choice[0]), int(choice[1]), get_value_by_side())
+			break
 
 
 
+def foresee_if_safe_to_counter(x,y):
+	Board[x][y] = get_value_by_side()
+	print("Experimenting")
+	# print_board()
+	opp_move_space = []
+	for i in range(board_height):
+		for j in range(board_width):
+			if Board[i][j] < 1:
+				opp_move_space.append("".join([str(i), str(j)]))
+	# print(f'Oppent Move Space should be {opp_move_space}')
+	for choice in opp_move_space:
+		if check_all_rows_by_point(int(choice[0]), int(choice[1]), counter='Yes'):
+			print('Foresee Opponent Flock!!!!!')
+			Board[x][y] = 0
+			print('Experiment Done, Recovered')
+			return False
+	Board[x][y] = 0
+	# print_board()
+	print('Experiment Done, Recovered')
+
+
+
+
+# check if the position has potential to made a flock
 def check_all_rows_by_point(x, y, counter=None):
 	
 	if counter:
@@ -192,6 +219,35 @@ def check_board_has_empty():
 		return True
 
 
+
+
+
+def place_at_reachable_corners():
+	global MoveSide
+	corner_space = []
+	random_space = []
+	for x in range(board_height):
+		for y in range(board_width):
+			if Board[x][y] < 1 and x != 1 and y != 1:
+				corner_space.append("".join([str(x), str(y)]))
+	if len(corner_space) != 0:
+		choice = random.choice(corner_space)
+		print("Go Corner")
+		place_stone(int(choice[0]), int(choice[1]), get_value_by_side())
+	else:
+		for x in range(board_height):
+			for y in range(board_width):
+				if Board[x][y] < 1:
+					random_space.append("".join([str(x), str(y)]))
+
+		choice = random.choice(random_space)
+		print('Go Random, should be middle edge')
+		place_stone(int(choice[0]), int(choice[1]), get_value_by_side())
+
+
+
+
+
 # Random Placing Method
 def RandomMove():
 	global MoveSide
@@ -222,9 +278,7 @@ def RandomMove():
 		print('Against Opposite Corner')
 		place_stone(2, 2, get_value_by_side())
 	# elif len([item in items if int(item[0]) == ])
-	else:
-		choice = random.choice(random_space)
-		place_stone(int(choice[0]), int(choice[1]), get_value_by_side())
+	
 
 
 
@@ -272,6 +326,9 @@ while(WinSide == ''):
 
 	if WinSide == '' and not Placed:
 		RandomMove()
+
+	if WinSide == '' and not Placed:
+		place_at_reachable_corners()
 	
 	if WinSide != '':
 		print_board()
