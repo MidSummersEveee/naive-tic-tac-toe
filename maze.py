@@ -5,7 +5,6 @@ reachable = []
 
 # read from file
 path = 'maze.txt'
-# path = 'small.txt'
 with open(path, 'r') as source:
 	lines = source.readlines()
 	for line in lines:
@@ -13,8 +12,8 @@ with open(path, 'r') as source:
 			maze.append([int(bit) for bit in line.strip().split()])
 
 # check integrity
-print(len(maze))
-print(len(maze[0]))
+# print(len(maze))
+# print(len(maze[0]))
 
 
 # add the given point into input's reachable group
@@ -42,9 +41,6 @@ def move_to(x, y):
 	
 	# print(f'x: {x}, y: {y}')
 
-	if x == 37 and y == 77:
-		print('Did hit it!!!!!!!!!!!!!!!!!!!!!!!!')
-
 	# check left
 	if y > 0:
 		if check_position(x, y-1) and not check_noted(x, y-1):
@@ -66,18 +62,30 @@ def move_to(x, y):
 			move_to(x+1, y)
 
 
-# get reachable group of first input
-move_to(1, 75)
 
-# for item in reachable:
-# 	print(f'{item} : {maze[item[0]][item[1]]}')
+# function to perform a check
+def exp(x1, y1, x2, y2):
+
+	# check inputs
+	if maze[x1][y1] + maze[x2][y2] > 0:
+		print(f'There is no path between ({x1}, {y1}) and ({x2}, {y2}).')
+		reachable = []
+		return
+
+	# call DFS
+	move_to(x1, y1)
+	if check_noted(x2, y2):
+		print(f'There is at least one path between ({x1}, {y1}) and ({x2}, {y2}).')
+	else:
+		print(f'There no path between ({x1}, {y1}) and ({x2}, {y2}).')
+	reachable = []
 
 
-# check if second input is in that group
-if check_noted(37, 77):
-	print("Yes, we find it")
-else:
-	print("Sorry, not reachable")
-
-# print(maze[1][75])
-# print(maze[37][77])
+# print(maze[4][20])
+# print(maze[79][66])
+exp(4, 20, 79 ,66)
+exp(1, 34, 15, 47)
+exp(1, 2, 3, 39)
+exp(0, 0, 3, 77)
+exp(1, 75, 8, 79)
+exp(1, 75, 39, 40)
