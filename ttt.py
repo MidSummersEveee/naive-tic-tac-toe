@@ -248,8 +248,8 @@ def place_at_reachable_corners():
 
 
 
-# Random Placing Method
-def RandomMove():
+# Place at opposite corner
+def place_at_opposite_corner():
 	global MoveSide
 	random_space = []
 	# [[random_space.append("".join([str(x), str(y)])) if Board[x][y] < 1 for x in range(board_width)] for y in range(board_height)]
@@ -325,7 +325,7 @@ while(WinSide == ''):
 		counter_flock()
 
 	if WinSide == '' and not Placed:
-		RandomMove()
+		place_at_opposite_corner()
 
 	if WinSide == '' and not Placed:
 		place_at_reachable_corners()
